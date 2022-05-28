@@ -6,6 +6,7 @@ from kivy.uix.button import Button
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.screenmanager import Screen
 from random import sample
+from .button_positions import *
 
 global board
 
@@ -149,89 +150,52 @@ class Sudoku(Screen):
         if opacity == VISIBLE:
             self.ids.background.pos_hint = {'x': 0.035, 'y': 0.425}
         else:
-            self.ids.background.pos_hint = {'x': 0, 'y': 0}
+            self.ids.background.pos_hint = ZERO_POS
 
     # Manages the Size / Visibility / Position of the 9x9 Grid
     def fields_manager(self, size_hint, opacity, disabled):
 
-        def init_pos():
-            x = 0.04
-            y = 0.85
-
-            # For Loop to Set the Grid with some Spaces in between the Cubes
-
-            for self.button in grid_buttons_ids:
-                x = round(x, 2)
-                y = round(y, 2)
-
-                if x == 0.34 or x == 0.65:
-                    x += 0.01
-                    x = round(x, 2)
-
-                if x == 0.96:
-                    x = 0.04
-                    y -= 0.05
-                    y = round(y, 2)
-
-                if y == 0.70 or y == 0.54:
-                    y -= 0.01
-                    y = round(y, 2)
-
-                self.button.pos_hint = {'x': x, 'y': y}
-                x += 0.1
-
-        def zero_pos():
-
-            # For Loop to Hide all the 9x9 Grid Buttons
-            for self.button in grid_buttons_ids:
-                self.button.pos_hint = {'x': 0, 'y': 0}
-
         # For Loop to Set the Size, Visibility and Enables the Buttons
-
         for self.button in grid_buttons_ids:
             self.button.size_hint = size_hint
             self.button.opacity = opacity
             self.button.disabled = disabled
 
-        # Condition to Position the Buttons if they are Visible
-
+        # Condition to Position the Buttons if they are Visible and Already Created
         if not len(grid_buttons_ids) == 0:
             if grid_buttons_ids[0].opacity == VISIBLE:
-                init_pos()
+
+                # For Loop to Show all the Buttons in the Correct Position
+                for index, self.button in enumerate(grid_buttons_ids):
+                    self.button.pos_hint = fields_pos[index]
+
             else:
-                zero_pos()
+
+                # For Loop to Hide all the 9x9 Grid Buttons
+                for self.button in grid_buttons_ids:
+                    self.button.pos_hint = ZERO_POS
 
     # Manages the Size / Visibility / Position of the Action Buttons
     def action_buttons_manager(self, size_hint, opacity, disabled):
 
-        def init_pos():
-            x = 0.04
-            y = 0.35
-
-            for self.button in action_buttons_ids:
-                x = round(x, 2)
-
-                if x == 0.34 or x == 0.65:
-                    x += 0.01
-                    x = round(x, 2)
-
-                self.button.pos_hint = {'x': x, 'y': y}
-                x += 0.1
-
-        def zero_pos():
-            # For Loop to Hide all the Action Buttons
-            for self.button in action_buttons_ids:
-                self.button.pos_hint = {'x': 0, 'y': 0}
-
+        # For Loop to Initiate the Action Buttons
         for self.button in action_buttons_ids:
             self.button.size_hint = size_hint
             self.button.opacity = opacity
             self.button.disabled = disabled
 
+        # If Statement to Show the Action Buttons if they are visible
         if opacity == VISIBLE:
-            init_pos()
+
+            # For Loop to Show all the Action Buttons
+            for index, self.button in enumerate(action_buttons_ids):
+                self.button.pos_hint = action_buttons_pos[index]
+
         else:
-            zero_pos()
+
+            # For Loop to Hide all the Action Buttons
+            for self.button in action_buttons_ids:
+                self.button.pos_hint = ZERO_POS
 
     # Manages the Size / Visibility / Position of the Level Buttons
     def level_buttons_manager(self, size, opacity, disabled):
@@ -284,8 +248,9 @@ class Sudoku(Screen):
         board = [[nums[pattern(r, c)] for c in cols] for r in rows]
         solution = [[nums[pattern(r, c)] for c in cols] for r in rows]
 
-        for line in board:
-            print(line)
+        # Prints the solution for testing purposes
+        # for line in board:
+        #     print(line)
 
         squares = side * side
         self.empties = 0
