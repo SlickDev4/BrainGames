@@ -1,0 +1,82 @@
+<SudokuGrid@ToggleButton>:
+    size_hint: 0, 0
+    opacity: 0
+    disabled: True
+    group: 'board'
+    background_disabled_normal: self.background_normal
+    disabled_color: self.color
+    font_size: sp(20)
+
+<SudokuButtons@Button>:
+    size_hint: 0, 0
+    opacity: 0
+    disabled: True
+    font_size: sp(20)
+
+<Sudoku>:
+    id: sudoku
+
+    CustomImage:
+        source: 'images/dark_mode.jpg'
+
+    HomeButtons:
+        text: 'Back'
+        pos_hint: {'x': 0.05, 'y': 0.05}
+        background_color: (0,0,1,1)
+        on_press:
+            root.manager.current = 'games'
+            root.manager.transition.direction = 'right'
+            root.back()
+
+    LevelButtons:
+        id: easy
+        text: 'Easy'
+        size_hint: 0.8, 0.1
+        pos_hint: {'x': 0.1, 'y': 0.8}
+        background_color: (0,1,0,1)
+        on_press: root.initiate_level('easy')
+
+    LevelButtons:
+        id: medium
+        text: 'Medium'
+        size_hint: 0.8, 0.1
+        background_color: (235/255,153/255,12/255,1)
+        pos_hint: {'x': 0.1, 'y': 0.65}
+        on_press: root.initiate_level('medium')
+
+    LevelButtons:
+        id: hard
+        text: 'Hard'
+        size_hint: 0.8, 0.1
+        background_color: (1,0,0,1)
+        pos_hint: {'x': 0.1, 'y': 0.5}
+        on_press: root.initiate_level('hard')
+
+    LevelButtons:
+        id: expert
+        text: 'Expert'
+        size_hint: 0.8, 0.1
+        background_color: (0,0,0,1)
+        pos_hint: {'x': 0.1, 'y': 0.35}
+        on_press: root.initiate_level('expert')
+
+    CustomLabel:
+        id: background
+        opacity: 0
+        background_color:(0,0,0,1)
+        size_hint: 0, 0
+        pos_hint: {'x': 0, 'y': 0}
+
+    CustomLabel:
+        id: tries
+        opacity: 0
+        background_color:(0,0,0,1)
+        size_hint: 0, 0
+        pos_hint: {'x': 0, 'y': 0}
+
+    CustomLabel:
+        id: timer
+        font_size: sp(20)
+        size_hint: 0.25, 0.07
+        pos_hint: {'x': 0.7, 'y': 0.915}
+        opacity: 0

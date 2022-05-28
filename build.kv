@@ -1,0 +1,59 @@
+<CustomLabel@Label>:
+    text_size: self.size
+    valign: 'middle'
+    halign: 'center'
+    background_color: (1,1,1,0)
+    color:(1,1,1,1)
+    canvas.before:
+        Color:
+            rgba: self.background_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+<Progress@ProgressBar>:
+    opacity: 0
+    min: 0
+    max: 100
+    value: 0
+    canvas:
+        Color:
+            rgb: 1, 1, 1
+        BorderImage:
+            border: (8, 8, 8, 8)
+            pos: self.x, self.center_y - 8
+            size: self.width, 16
+            source: 'images/progress_bars/red.png'
+        BorderImage:
+            id: brd
+            border: [int(min(self.width * (self.value / float(self.max)) if self.max else 0, 8))] * 4
+            pos: self.x, self.center_y - 8
+            size: self.width * (self.value / float(self.max)) if self.max else 0, 16
+            source: 'images/progress_bars/green.png'
+
+<CustomImage@Image>:
+    keep_ratio: False
+    allow_stretch: True
+    size_hint: 1, 1
+
+<HomeButtons@Button>:
+    size_hint: 0.9, 0.1
+    font_size: sp(25)
+
+<GameButtons@Button>:
+    size_hint: 0.45, 0.2
+    font_size: sp(20)
+
+<LevelButtons@Button>:
+    font_size: sp(30)
+    size_hint: 0.8, 0.2
+
+<MainWindow>:
+    Home:
+    Games:
+    Scoreboard:
+    SettingsPage:
+
+    Puzzle:
+    Sudoku:
+

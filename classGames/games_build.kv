@@ -1,0 +1,48 @@
+<Games>:
+    CustomImage:
+        source: 'images/dark_mode.jpg'
+
+    HomeButtons:
+        text: 'Back'
+        pos_hint: {'x': 0.05, 'y': 0.05}
+        background_color: (0,0,1,1)
+        on_press:
+            root.manager.current = 'home'
+            root.manager.transition.direction = 'right'
+
+    GameButtons:
+        id: game_1
+        text: 'Tiles match'
+        pos_hint: {'x': 0.025, 'y': 0.78}
+        background_color: (0,1,0,1)
+        on_press:
+            root.manager.current = 'puzzle'
+            root.manager.transition.direction = 'left'
+
+    GameButtons:
+        id: game_2
+        text: 'Sudoku'
+        pos_hint: {'x': 0.525, 'y': 0.78}
+        on_press:
+            root.manager.current = 'sudoku'
+            root.manager.transition.direction = 'left'
+
+    GameButtons:
+        text: 'Game 3'
+        pos_hint: {'x': 0.025, 'y': 0.57}
+        disabled: True
+
+    GameButtons:
+        text: 'Game 4'
+        pos_hint: {'x': 0.525, 'y': 0.57}
+        disabled: True
+
+    GameButtons:
+        text: 'Game 5'
+        pos_hint: {'x': 0.025, 'y': 0.36}
+        disabled: True
+
+    GameButtons:
+        text: 'Game 6'
+        pos_hint: {'x': 0.525, 'y': 0.36}
+        disabled: True

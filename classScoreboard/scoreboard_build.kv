@@ -1,0 +1,11 @@
+<Scoreboard>:
+    CustomImage:
+        source: 'images/dark_mode.jpg'
+
+    HomeButtons:
+        text: 'Back'
+        pos_hint: {'x': 0.05, 'y': 0.05}
+        background_color: (0,0,1,1)
+        on_press:
+            root.manager.current = 'home'
+            root.manager.transition.direction = 'right'

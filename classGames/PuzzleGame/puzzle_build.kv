@@ -1,0 +1,76 @@
+<PuzzleButtons@ToggleButton>:
+    size_hint: 0, 0
+    pos_hint: {'x': 0, 'y': 0}
+    opacity: 0
+
+<PuzzleImages@Image>:
+    source: ''
+    keep_ratio: False
+    allow_stretch: True
+    size: self.parent.size
+    center_x: self.parent.center_x
+    center_y:self.parent.center_y
+    opacity: 0
+
+<PuzzleQuestionImage@Image>:
+    source: 'images/puzzle_images/question_mark.jpg'
+    keep_ratio: False
+    allow_stretch: True
+    size: self.parent.size
+    center_x: self.parent.center_x
+    center_y:self.parent.center_y
+
+<Puzzle>:
+    id: puzzle
+
+    CustomImage:
+        source: 'images/dark_mode.jpg'
+
+    HomeButtons:
+        text: 'Back'
+        pos_hint: {'x': 0.05, 'y': 0.05}
+        background_color: (0,0,1,1)
+        on_press:
+            root.manager.current = 'games'
+            root.manager.transition.direction = 'right'
+            root.back()
+
+    LevelButtons:
+        id: easy
+        text: 'Easy'
+        pos_hint: {'x': 0.1, 'y': 0.75}
+        background_color: (0,1,0,1)
+        on_press: root.initiate_level('easy')
+
+    LevelButtons:
+        id: medium
+        text: 'Medium'
+        background_color: (235/255,153/255,12/255,1)
+        pos_hint: {'x': 0.1, 'y': 0.5}
+        on_press: root.initiate_level('medium')
+
+    LevelButtons:
+        id: hard
+        text: 'Hard'
+        background_color: (1,0,0,1)
+        pos_hint: {'x': 0.1, 'y': 0.25}
+        on_press: root.initiate_level('hard')
+
+    Progress:
+        id: progress
+        size_hint: 0.6, 0.2
+        pos_hint: {'x': 0.05, 'y': 0.85}
+
+    CustomLabel:
+        id: timer
+        font_size: sp(20)
+        size_hint: 0.25, 0.07
+        pos_hint: {'x': 0.7, 'y': 0.915}
+        opacity: 0
+
+    CustomLabel:
+        id: level_complete
+        font_size: sp(20)
+        size_hint: 0.8, 0.6
+        pos_hint: {'x': 0.1, 'y': 0.3}
+        opacity: 0
