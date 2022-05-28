@@ -15,6 +15,8 @@ kv = Builder.load_file("classGames/SudokuGame/sudoku_build.kv")
 minutes = 0
 seconds = 0
 
+tries = 3
+
 EASY = False
 MEDIUM = False
 HARD = False
@@ -27,8 +29,14 @@ BACKGROUND_LABEL_SIZE = (0.93, 0.48)
 FIELDS_SIZE = (0.1, 0.05)
 ACTION_BUTTONS_SIZE = (0.1, 0.05)
 LEVEL_BUTTONS_SIZE = (0.8, 0.1)
+END_OF_LEVEL_SIZE = 0.8, 0.7
+END_OF_LEVEL_POS = {'x': 0.1, 'y': 0.3}
+
+END_OF_LEVEL_FAIL_TEXT = f'I am sorry but you have failed to complete this level, please click on back and try again!'
+END_OF_LEVEL_SUCCESS_TEXT = f'Congratulations, you completed the level successfully!'
 
 ZERO_SIZE = (0, 0)
+ZERO_POS = {'x': 0, 'y': 0}
 
 ENABLED = False
 DISABLED = True
@@ -132,6 +140,11 @@ class Sudoku(Screen):
 
         self.ids.background.size_hint = background_size
         self.ids.background.opacity = opacity
+
+        self.ids.tries.opacity = opacity
+        self.ids.tries.size_hint = 0.5, 0.1
+        self.ids.tries.pos_hint = {'x': 0.04, 'y': 0.9}
+        self.ids.tries.text = f'Tries left: {tries}/3'
 
         if opacity == VISIBLE:
             self.ids.background.pos_hint = {'x': 0.035, 'y': 0.425}
@@ -238,6 +251,13 @@ class Sudoku(Screen):
         self.ids.expert.opacity = opacity
         self.ids.hard.disabled = disabled
 
+    def end_of_level_label_manager(self, size, pos, opacity, text):
+
+        self.ids.level_completed.opacity = opacity
+        self.ids.level_completed.size_hint = size
+        self.ids.level_completed.pos_hint = pos
+        self.ids.level_completed.text = text
+
     # ----------------------------------- Generate the Sudoku Puzzle ------------------------------------------
 
     # Fill the Board with a whole Solution and then Remove some numbers depending on the difficulty
@@ -264,8 +284,8 @@ class Sudoku(Screen):
         board = [[nums[pattern(r, c)] for c in cols] for r in rows]
         solution = [[nums[pattern(r, c)] for c in cols] for r in rows]
 
-        # for line in board:
-        #     print(line)
+        for line in board:
+            print(line)
 
         squares = side * side
         self.empties = 0
@@ -344,6 +364,7 @@ class Sudoku(Screen):
                 # If yes, it checks the User Input with the Solution
                 if self.button.text != str(solution[x][y]):
                     self.button.text = ''
+                    self.tries_left()
                 else:
                     self.button.disabled = True
 
@@ -383,6 +404,7 @@ class Sudoku(Screen):
             seconds = 0
             self.ids.timer.text = f'{minutes}:{seconds}'
 
+    # Unschedule and Reset the Timer to Zero
     def reset_timer(self):
         global minutes, seconds
 
@@ -390,44 +412,71 @@ class Sudoku(Screen):
         minutes = 0
         seconds = 0
 
-    # Needs to be Done
+    # If the User makes a Mistake, the Tries Variable is decremented
     def tries_left(self):
-        pass
+        global tries
 
+        tries -= 1
+        self.ids.tries.text = f'Tries left: {tries}/3'
+
+        # If the User has Zero tries, the level is Failed
+        if tries == 0:
+            self.reset_level()
+            self.end_of_level_label_manager(END_OF_LEVEL_SIZE, END_OF_LEVEL_POS, VISIBLE, END_OF_LEVEL_FAIL_TEXT)
+
+    # Level successfully completed Function
     def complete_level(self):
 
         grid_buttons_text.clear()
 
+        # For Loop to add the User's Answers and to check if the level is completed
         for self.button in grid_buttons_ids:
             grid_buttons_text.append(self.button.text)
 
+        # If the User has completed the level successfully, it resets the level and congratulates the user
         if '' not in grid_buttons_text:
-            print('level completed')
-            self.reset_timer()
+            self.reset_level()
+            self.end_of_level_label_manager(END_OF_LEVEL_SIZE, END_OF_LEVEL_POS, VISIBLE, END_OF_LEVEL_SUCCESS_TEXT)
             grid_buttons_text.clear()
 
     # ----------------------------------- Reset Level / Back to Games Page ---------------------------------------
 
-    def back(self):
-        global EASY, MEDIUM, HARD, EXPERT
+    # Resets the level Function
+    def reset_level(self):
+        global EASY, MEDIUM, HARD, EXPERT, tries
 
-        self.level_buttons_manager(LEVEL_BUTTONS_SIZE, VISIBLE, ENABLED)
         self.action_buttons_manager(ZERO_SIZE, INVISIBLE, DISABLED)
         self.fields_manager(ZERO_SIZE, INVISIBLE, DISABLED)
-
         self.labels_manager(ZERO_SIZE, INVISIBLE)
+        self.end_of_level_label_manager(ZERO_SIZE, ZERO_POS, INVISIBLE, '')
 
         EASY = False
         MEDIUM = False
         HARD = False
         EXPERT = False
 
-        self.ids.easy.pos_hint = {'x': 0.1, 'y': 0.8}
-        self.ids.medium.pos_hint = {'x': 0.1, 'y': 0.65}
-        self.ids.hard.pos_hint = {'x': 0.1, 'y': 0.5}
-        self.ids.expert.pos_hint = {'x': 0.1, 'y': 0.35}
+        self.ids.tries.size_hint = ZERO_SIZE
+        self.ids.tries.pos_hint = ZERO_POS
+        self.ids.tries.text = ''
+
+        tries = 3
 
         self.reset_timer()
         self.ids.timer.text = ''
 
         grid_buttons_text.clear()
+
+        for self.button in grid_buttons_ids:
+            self.button.state = 'normal'
+
+    # Back to the Games Page Function
+    def back(self):
+
+        self.level_buttons_manager(LEVEL_BUTTONS_SIZE, VISIBLE, ENABLED)
+
+        self.ids.easy.pos_hint = {'x': 0.1, 'y': 0.8}
+        self.ids.medium.pos_hint = {'x': 0.1, 'y': 0.65}
+        self.ids.hard.pos_hint = {'x': 0.1, 'y': 0.5}
+        self.ids.expert.pos_hint = {'x': 0.1, 'y': 0.35}
+
+        self.reset_level()

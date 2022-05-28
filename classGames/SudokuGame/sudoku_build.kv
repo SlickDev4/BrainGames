@@ -70,7 +70,11 @@
     CustomLabel:
         id: tries
         opacity: 0
-        background_color:(0,0,0,1)
+        font_size: sp(20)
+        text_size: self.size
+        valign: 'middle'
+        halign: 'center'
+        background_color:(0,0,0,0)
         size_hint: 0, 0
         pos_hint: {'x': 0, 'y': 0}
 
@@ -80,3 +84,14 @@
         size_hint: 0.25, 0.07
         pos_hint: {'x': 0.7, 'y': 0.915}
         opacity: 0
+
+    CustomLabel:
+        id: level_completed
+        opacity: 0
+        font_size: sp(20)
+        text_size: self.size
+        valign: 'middle'
+        halign: 'center'
+        background_color:(0,0,0,0)
+        size_hint: 0, 0
+        pos_hint: {'x': 0, 'y': 0}
