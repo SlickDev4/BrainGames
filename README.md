@@ -1,2 +1,3 @@
 # BrainGames
- Different Brain Games
+ Different Brain Games - Early Dev Stage
+ No moder design - if interested to help, let me know
