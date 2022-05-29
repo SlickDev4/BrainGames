@@ -184,17 +184,15 @@ class Sudoku(Screen):
             self.button.opacity = opacity
             self.button.disabled = disabled
 
-        # If Statement to Show the Action Buttons if they are visible
-        if opacity == VISIBLE:
+        # For Loop to Iterate through the Action Buttons
+        for index, self.button in enumerate(action_buttons_ids):
 
-            # For Loop to Show all the Action Buttons
-            for index, self.button in enumerate(action_buttons_ids):
+            # If Statement to Position the Buttons if they are Visible
+            if opacity == VISIBLE:
                 self.button.pos_hint = action_buttons_pos[index]
 
-        else:
-
-            # For Loop to Hide all the Action Buttons
-            for self.button in action_buttons_ids:
+            # Else Zero Position the Buttons if they are Invisible
+            else:
                 self.button.pos_hint = ZERO_POS
 
     # Manages the Size / Visibility / Position of the Level Buttons
