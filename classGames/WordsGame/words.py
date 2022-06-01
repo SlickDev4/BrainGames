@@ -1,6 +1,6 @@
 from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen
-from .oxford_dictionary import dictionary_3000
+from .oxford_dictionary import dictionary
 
 kv = Builder.load_file("classGames/WordsGame/words_build.kv")
 
@@ -30,12 +30,12 @@ class Words(Screen):
         characters_set = set(characters)
         dc = []
 
-        for word in dictionary_3000:
+        for word in dictionary:
             word = word.lower()
             if all(char in characters_set for char in set(word)):
                 dc.append(word)
 
         print(len(dc))
-        print(len(dictionary_3000))
+        print(len(dictionary))
 
 
