@@ -12,6 +12,7 @@ from classSettings.settings import SettingsPage
 
 from classGames.PuzzleGame.puzzle import Puzzle
 from classGames.SudokuGame.sudoku import Sudoku
+from classGames.WordsGame.words import Words
 
 
 class MainWindow(ScreenManager):
@@ -22,7 +23,7 @@ kv = Builder.load_file("build.kv")
 sm = MainWindow()
 
 screens = [Home(name='home'), Games(name='games'), Scoreboard(name='scoreboard'), SettingsPage(name='settings'),
-           Puzzle(name='puzzle'), Sudoku(name='sudoku')]
+           Puzzle(name='puzzle'), Sudoku(name='sudoku'), Words(name='words')]
 
 for screen in screens:
     sm.add_widget(screen)

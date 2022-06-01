@@ -1,0 +1,41 @@
+<Words>:
+
+    CustomImage:
+        source: 'images/dark_mode.jpg'
+
+    HomeButtons:
+        text: 'Back'
+        pos_hint: {'x': 0.05, 'y': 0.05}
+        background_color: (0,0,1,1)
+        on_press:
+            root.manager.current = 'games'
+            root.manager.transition.direction = 'right'
+
+    LevelButtons:
+        id: easy
+        text: 'Easy'
+        size_hint: 0.8, 0.1
+        pos_hint: {'x': 0.1, 'y': 0.8}
+        background_color: (0,1,0,1)
+        on_press: root.test()
+
+    LevelButtons:
+        id: medium
+        text: 'Medium'
+        size_hint: 0.8, 0.1
+        background_color: (235/255,153/255,12/255,1)
+        pos_hint: {'x': 0.1, 'y': 0.65}
+
+    LevelButtons:
+        id: hard
+        text: 'Hard'
+        size_hint: 0.8, 0.1
+        background_color: (1,0,0,1)
+        pos_hint: {'x': 0.1, 'y': 0.5}
+
+    LevelButtons:
+        id: expert
+        text: 'Expert'
+        size_hint: 0.8, 0.1
+        background_color: (0,0,0,1)
+        pos_hint: {'x': 0.1, 'y': 0.35}

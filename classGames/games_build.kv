@@ -12,7 +12,7 @@
 
     GameButtons:
         id: game_1
-        text: 'Tiles match'
+        text: 'Card Match'
         pos_hint: {'x': 0.025, 'y': 0.78}
         background_color: (0,1,0,1)
         on_press:
@@ -23,14 +23,18 @@
         id: game_2
         text: 'Sudoku'
         pos_hint: {'x': 0.525, 'y': 0.78}
+        background_color: (1,0,0,1)
         on_press:
             root.manager.current = 'sudoku'
             root.manager.transition.direction = 'left'
 
     GameButtons:
-        text: 'Game 3'
+        text: 'Words'
         pos_hint: {'x': 0.025, 'y': 0.57}
-        disabled: True
+        background_color: (0,0,1,1)
+        on_press:
+            root.manager.current = 'words'
+            root.manager.transition.direction = 'left'
 
     GameButtons:
         text: 'Game 4'
