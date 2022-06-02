@@ -106,7 +106,7 @@ class Sudoku(Screen):
 
             # For Loop to Create the Buttons if they are not created
             for i in range(1, 82):
-                grid_buttons = ToggleButton(size_hint=FIELDS_SIZE, opacity=INVISIBLE, disabled=DISABLED, group='board',
+                grid_buttons = ToggleButton(size_hint=ZERO_SIZE, opacity=INVISIBLE, disabled=DISABLED, group='board',
                                             font_size=sp(20), disabled_color=[1, 1, 1, 1],
                                             background_disabled_normal='atlas://data/images/defaulttheme/button')
 
@@ -163,16 +163,16 @@ class Sudoku(Screen):
 
         # Condition to Position the Buttons if they are Visible and Already Created
         if not len(grid_buttons_ids) == 0:
-            if grid_buttons_ids[0].opacity == VISIBLE:
 
-                # For Loop to Show all the Buttons in the Correct Position
-                for index, self.button in enumerate(grid_buttons_ids):
+            # For Loop to Iterate through the Buttons List
+            for index, self.button in enumerate(grid_buttons_ids):
+
+                # If Statement to Show all the Buttons in the Correct Position
+                if grid_buttons_ids[0].opacity == VISIBLE:
                     self.button.pos_hint = fields_pos[index]
 
-            else:
-
-                # For Loop to Hide all the 9x9 Grid Buttons
-                for self.button in grid_buttons_ids:
+                # Else Hides all the 9x9 Grid Buttons
+                else:
                     self.button.pos_hint = ZERO_POS
 
     # Manages the Size / Visibility / Position of the Action Buttons
@@ -211,7 +211,21 @@ class Sudoku(Screen):
 
         self.ids.expert.size_hint = size
         self.ids.expert.opacity = opacity
-        self.ids.hard.disabled = disabled
+        self.ids.expert.disabled = disabled
+
+        # If Statement to ensure that when the Buttons are Hidden, their Position is Zero
+        if opacity == INVISIBLE:
+            self.ids.easy.pos_hint = ZERO_POS
+            self.ids.medium.pos_hint = ZERO_POS
+            self.ids.hard.pos_hint = ZERO_POS
+            self.ids.expert.pos_hint = ZERO_POS
+
+        # Else Positions the Buttons Properly
+        else:
+            self.ids.easy.pos_hint = {'x': 0.1, 'y': 0.8}
+            self.ids.medium.pos_hint = {'x': 0.1, 'y': 0.65}
+            self.ids.hard.pos_hint = {'x': 0.1, 'y': 0.5}
+            self.ids.expert.pos_hint = {'x': 0.1, 'y': 0.35}
 
     def end_of_level_label_manager(self, size, pos, opacity, text):
 
@@ -436,10 +450,4 @@ class Sudoku(Screen):
     def back(self):
 
         self.level_buttons_manager(LEVEL_BUTTONS_SIZE, VISIBLE, ENABLED)
-
-        self.ids.easy.pos_hint = {'x': 0.1, 'y': 0.8}
-        self.ids.medium.pos_hint = {'x': 0.1, 'y': 0.65}
-        self.ids.hard.pos_hint = {'x': 0.1, 'y': 0.5}
-        self.ids.expert.pos_hint = {'x': 0.1, 'y': 0.35}
-
         self.reset_level()
