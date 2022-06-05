@@ -1,3 +1,9 @@
+<Confirm_Remove@Button>:
+    size_hint: 0, 0
+    pos_hint: {'x': 0, 'y': 0}
+    opacity: 0
+    disabled: True
+
 <Words>:
 
     CustomImage:
@@ -43,3 +49,36 @@
         background_color: (0,0,0,1)
         pos_hint: {'x': 0.1, 'y': 0.35}
         on_press: root.initiate_level('expert')
+
+    CustomLabel:
+        id: word_label
+        valign: 'top'
+        halign: 'left'
+        background_color: (0,0,0,1)
+        size_hint: 0, 0
+        pos_hint: {'x': 0, 'y': 0}
+        opacity: 0
+
+    CustomLabel:
+        id: current_word_label
+        valign: 'top'
+        halign: 'left'
+        background_color: (0,0,0,1)
+        size_hint: 0, 0
+        pos_hint: {'x': 0, 'y': 0}
+        opacity: 0
+
+    Confirm_Remove:
+        id: confirm_button
+        text: 'confirm'
+        on_press: root.confirm_word_and_add_to_main_label()
+
+    Confirm_Remove:
+        id: remove_button
+        text: 'remove'
+        on_press: root.remove_characters_from_label()
+
+    Confirm_Remove:
+        id: delete_button
+        text: 'delete'
+        on_press: root.delete_word_from_current_label()
